@@ -51,7 +51,7 @@
 [参见](./dev_environment.md)
 
 ## 创建项目 
-[参见](./dev_create.md)
+[参见](./app_create.md)
 
 
 ## 几点提示
