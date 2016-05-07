@@ -4771,11 +4771,11 @@ var zyngaCore = { effect: {} };
 
 
 /**
- * ionic.views.Scroll
+ * ionic.page.Scroll
  * A powerful scroll view with support for bouncing, pull to refresh, and paging.
  * @param   {Object}        options options for the scroll view
  * @class A scroll view system
- * @memberof ionic.views
+ * @memberof ionic.page
  */
 ionic.views.Scroll = ionic.views.View.inherit({
   initialize: function(options) {
@@ -5267,7 +5267,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Listen on document because container may not have had the last
     // keyboardActiveElement, for example after closing a modal with a focused
     // input and returning to a previously resized scroll view in an ion-content.
-    // Since we can only resize scroll views that are currently visible, just resize
+    // Since we can only resize scroll page that are currently visible, just resize
     // the current scroll view when the keyboard is closed.
     document.addEventListener('resetScrollView', self.resetScrollView);
 
@@ -7531,7 +7531,7 @@ ionic.scroll = {
       // Listen on document because container may not have had the last
       // keyboardActiveElement, for example after closing a modal with a focused
       // input and returning to a previously resized scroll view in an ion-content.
-      // Since we can only resize scroll views that are currently visible, just resize
+      // Since we can only resize scroll page that are currently visible, just resize
       // the current scroll view when the keyboard is closed.
       document.addEventListener('resetScrollView', self.resetScrollView);
     },
@@ -7931,7 +7931,7 @@ ionic.scroll = {
 
   /**
    * The ListView handles a list of items. It will process drag animations, edit mode,
-   * and other operations that are common on mobile lists or table views.
+   * and other operations that are common on mobile lists or table page.
    */
   ionic.views.ListView = ionic.views.View.inherit({
     initialize: function(opts) {
@@ -20958,7 +20958,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    *   });
    *
    *   myMod.component('myComp', {
-   *     templateUrl: 'views/my-comp.html',
+   *     templateUrl: 'page/my-comp.html',
    *     controller: 'MyCtrl',
    *     controllerAs: 'ctrl',
    *     bindings: {name: '@'}
@@ -51117,7 +51117,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
 
     // If there is no explicit multi-view configuration, make one up so we don't have
     // to handle both cases in the view directive later. Note that having an explicit
-    // 'views' property will mean the default unnamed view properties are ignored. This
+    // 'page' property will mean the default unnamed view properties are ignored. This
     // is also a good time to resolve view names to absolute names, so everything is a
     // straight lookup at link time.
     views: function(state) {
@@ -51327,9 +51327,9 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    *   navigable).
    * - **params** `{object}` - returns an array of state params that are ensured to 
    *   be a super-set of parent's params.
-   * - **views** `{object}` - returns a views object where each key is an absolute view 
+   * - **page** `{object}` - returns a page object where each key is an absolute view 
    *   name (i.e. "viewName@stateName") and each value is the config object 
-   *   (template, controller) for the view. Even when you don't use the views object 
+   *   (template, controller) for the view. Even when you don't use the page object 
    *   explicitly on a state config, one is still created for you internally.
    *   So by decorating this builder function you have access to decorating template 
    *   and controller properties.
@@ -51342,13 +51342,13 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    *
    * @example
    * <pre>
-   * // Override the internal 'views' builder with a function that takes the state
+   * // Override the internal 'page' builder with a function that takes the state
    * // definition, and a reference to the internal function being overridden:
-   * $stateProvider.decorator('views', function (state, parent) {
+   * $stateProvider.decorator('page', function (state, parent) {
    *   var result = {},
-   *       views = parent(state);
+   *       page = parent(state);
    *
-   *   angular.forEach(views, function (config, name) {
+   *   angular.forEach(page, function (config, name) {
    *     var autoName = (state.name + '.' + name).replace('.', '/');
    *     config.templateUrl = config.templateUrl || '/partials/' + autoName + '.html';
    *     result[name] = config;
@@ -51357,7 +51357,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    * });
    *
    * $stateProvider.state('home', {
-   *   views: {
+   *   page: {
    *     'contact.list': { controller: 'ListController' },
    *     'contact.item': { controller: 'ItemController' }
    *   }
@@ -51366,7 +51366,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    * // ...
    *
    * $state.go('home');
-   * // Auto-populates list and item views with /partials/home/contact/list.html,
+   * // Auto-populates list and item page with /partials/home/contact/list.html,
    * // and /partials/home/contact/item.html, respectively.
    * </pre>
    *
@@ -52367,7 +52367,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       })];
       if (inherited) promises.push(inherited);
 
-      // Resolve template and dependencies for all views.
+      // Resolve template and dependencies for all page.
       forEach(state.views, function (view, name) {
         var injectables = (view.resolve && view.resolve !== state.resolve ? view.resolve : {});
         injectables.$template = [ function () {
@@ -53802,7 +53802,7 @@ IonicModule
   '$ionicNavViewDelegate',
 function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $ionicNavViewDelegate) {
 
-  // history actions while navigating views
+  // history actions while navigating page
   var ACTION_INITIAL_VIEW = 'initialView';
   var ACTION_NEW_VIEW = 'newView';
   var ACTION_MOVE_BACK = 'moveBack';
@@ -54029,7 +54029,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       } else if (currentView && currentView.historyId !== historyId &&
                 hist.cursor > -1 && hist.stack.length > 0 && hist.cursor < hist.stack.length &&
                 hist.stack[hist.cursor].stateId === currentStateId) {
-        // they just changed to a different history and the history already has views in it
+        // they just changed to a different history and the history already has page in it
         var switchToView = hist.stack[hist.cursor];
         viewId = switchToView.viewId;
         historyId = switchToView.historyId;
@@ -54121,7 +54121,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
         }
 
         if (stateChangeCounter < 2) {
-          // views that were spun up on the first load should not animate
+          // page that were spun up on the first load should not animate
           direction = DIRECTION_NONE;
         }
 
@@ -54211,7 +54211,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#viewHistory
-     * @description The app's view history data, such as all the views and histories, along
+     * @description The app's view history data, such as all the page and histories, along
      * with how they are ordered and linked together within the navigation stack.
      * @returns {object} Returns an object containing the apps view history data.
      */
@@ -54334,9 +54334,9 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#goBack
-     * @param {number=} backCount Optional negative integer setting how many views to go
+     * @param {number=} backCount Optional negative integer setting how many page to go
      * back. By default it'll go back one view by using the value `-1`. To go back two
-     * views you would use `-2`. If the number goes farther back than the number of views
+     * page you would use `-2`. If the number goes farther back than the number of page
      * in the current history's stack then it'll go to the first view in the current history's
      * stack. If the number is zero or greater then it'll do nothing. It also does not
      * cross history stacks, meaning it can only go as far back as the current history.
@@ -54391,7 +54391,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       var backView = currentHistory.stack[currentCursor - 1];
       var replacementView = currentHistory.stack[currentCursor - 2];
 
-      // fail if we dont have enough views in the history
+      // fail if we dont have enough page in the history
       if (!backView || !replacementView) {
         return;
       }
@@ -54456,7 +54456,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      * @ngdoc method
      * @name $ionicHistory#clearCache
 	 * @return promise
-     * @description Removes all cached views within every {@link ionic.directive:ionNavView}.
+     * @description Removes all cached page within every {@link ionic.directive:ionNavView}.
      * This both removes the view element from the DOM, and destroy it's scope.
      */
     clearCache: function(stateIds) {
@@ -57913,7 +57913,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           }
 
           if (renderStart) {
-            // notify the views "before" the transition starts
+            // notify the page "before" the transition starts
             switcher.emit('before', enteringData, leavingData);
 
             // stage entering element, opacity 0, no transition duration
@@ -58000,7 +58000,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
             leavingEle && $timeout.cancel(leavingEle.data(DATA_FALLBACK_TIMER));
 
-            // resolve that this one transition (there could be many w/ nested views)
+            // resolve that this one transition (there could be many w/ nested page)
             deferred && deferred.resolve(navViewCtrl);
 
             // the most recent transition added has completed and all the active
@@ -58008,8 +58008,8 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             if (transitionId === transitionCounter) {
               $q.all(transitionPromises).then(ionicViewSwitcher.transitionEnd);
 
-              // emit that the views have finished transitioning
-              // each parent nav-view will update which views are active and cached
+              // emit that the page have finished transitioning
+              // each parent nav-view will update which page are active and cached
               switcher.emit('after', enteringData, leavingData);
               switcher.cleanup(enteringData);
             }
@@ -58070,10 +58070,10 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
         },
 
         cleanup: function(transData) {
-          // check if any views should be removed
+          // check if any page should be removed
           if (leavingEle && transData.direction == 'back' && !$ionicConfig.views.forwardCache()) {
             // if they just navigated back we can destroy the forward view
-            // do not remove forward views if cacheForwardViews config is true
+            // do not remove forward page if cacheForwardViews config is true
             destroyViewEle(leavingEle);
           }
 
@@ -59616,16 +59616,16 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
   self.render = function(registerData, viewLocals, enteringView, leavingView, renderStart, renderEnd) {
     // register the view and figure out where it lives in the various
-    // histories and nav stacks, along with how views should enter/leave
+    // histories and nav stacks, along with how page should enter/leave
     var switcher = $ionicViewSwitcher.create(self, viewLocals, enteringView, leavingView, renderStart, renderEnd);
 
-    // init the rendering of views for this navView directive
+    // init the rendering of page for this navView directive
     switcher.init(registerData, function() {
-      // the view is now compiled, in the dom and linked, now lets transition the views.
+      // the view is now compiled, in the dom and linked, now lets transition the page.
       // this uses a callback incase THIS nav-view has a nested nav-view, and after the NESTED
       // nav-view links, the NESTED nav-view would update which direction THIS nav-view should use
 
-      // kick off the transition of views
+      // kick off the transition of page
       switcher.transition(self.direction(), registerData.enableBack, !disableAnimation);
 
       // reset private vars for next time
@@ -61696,7 +61696,7 @@ function($scope, $element, $attrs, $compile, $rootScope) {
 
   self.beforeEnter = function(ev, transData) {
     // this event was emitted, starting at intial ion-view, then bubbles up
-    // only the first ion-view should do something with it, parent ion-views should ignore
+    // only the first ion-view should do something with it, parent ion-page should ignore
     if (transData && !transData.viewNotified) {
       transData.viewNotified = true;
 
@@ -64918,7 +64918,7 @@ IonicModule
             parentViewCtrl.navElement(navElementType, spanEle.outerHTML);
 
           } else {
-            // these are buttons for all views that do not have their own ion-nav-buttons
+            // these are buttons for all page that do not have their own ion-nav-buttons
             navBarCtrl.navElement(navElementType, spanEle.outerHTML);
           }
 
@@ -65020,7 +65020,7 @@ IonicModule
             parentViewCtrl.navElement(navElementType, spanEle.outerHTML);
 
           } else {
-            // these are buttons for all views that do not have their own ion-nav-buttons
+            // these are buttons for all page that do not have their own ion-nav-buttons
             navBarCtrl.navElement(navElementType, spanEle.outerHTML);
           }
 
@@ -65210,7 +65210,7 @@ IonicModule
   '$ionicConfig',
 function($state, $ionicConfig) {
   // IONIC's fork of Angular UI Router, v0.2.10
-  // the navView handles registering views in the history and how to transition between them
+  // the navView handles registering page in the history and how to transition between them
   return {
     restrict: 'E',
     terminal: true,
@@ -65219,7 +65219,7 @@ function($state, $ionicConfig) {
     controller: '$ionicNavView',
     compile: function(tElement, tAttrs, transclude) {
 
-      // a nav view element is a container for numerous views
+      // a nav view element is a container for numerous page
       tElement.addClass('view-container');
       ionic.DomUtil.cachedAttr(tElement, 'nav-view-transition', $ionicConfig.views.transition());
 
@@ -67137,7 +67137,7 @@ function($ionicTabsDelegate, $ionicConfig) {
           // variable to inform child tabs that they're all being blown away
           // used so that while destorying an individual tab, each one
           // doesn't select the next tab as the active one, which causes unnecessary
-          // loading of tab views when each will eventually all go away anyway
+          // loading of tab page when each will eventually all go away anyway
           $scope.$tabsDestroy = true;
           deregisterInstance();
           tabsCtrl.$tabsElement = tabsCtrl.$element = tabsCtrl.$scope = innerElement = null;

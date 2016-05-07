@@ -2201,7 +2201,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
 
     // If there is no explicit multi-view configuration, make one up so we don't have
     // to handle both cases in the view directive later. Note that having an explicit
-    // 'views' property will mean the default unnamed view properties are ignored. This
+    // 'page' property will mean the default unnamed view properties are ignored. This
     // is also a good time to resolve view names to absolute names, so everything is a
     // straight lookup at link time.
     views: function(state) {
@@ -2411,9 +2411,9 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    *   navigable).
    * - **params** `{object}` - returns an array of state params that are ensured to 
    *   be a super-set of parent's params.
-   * - **views** `{object}` - returns a views object where each key is an absolute view 
+   * - **page** `{object}` - returns a page object where each key is an absolute view 
    *   name (i.e. "viewName@stateName") and each value is the config object 
-   *   (template, controller) for the view. Even when you don't use the views object 
+   *   (template, controller) for the view. Even when you don't use the page object 
    *   explicitly on a state config, one is still created for you internally.
    *   So by decorating this builder function you have access to decorating template 
    *   and controller properties.
@@ -2426,13 +2426,13 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    *
    * @example
    * <pre>
-   * // Override the internal 'views' builder with a function that takes the state
+   * // Override the internal 'page' builder with a function that takes the state
    * // definition, and a reference to the internal function being overridden:
-   * $stateProvider.decorator('views', function (state, parent) {
+   * $stateProvider.decorator('page', function (state, parent) {
    *   var result = {},
-   *       views = parent(state);
+   *       page = parent(state);
    *
-   *   angular.forEach(views, function (config, name) {
+   *   angular.forEach(page, function (config, name) {
    *     var autoName = (state.name + '.' + name).replace('.', '/');
    *     config.templateUrl = config.templateUrl || '/partials/' + autoName + '.html';
    *     result[name] = config;
@@ -2441,7 +2441,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    * });
    *
    * $stateProvider.state('home', {
-   *   views: {
+   *   page: {
    *     'contact.list': { controller: 'ListController' },
    *     'contact.item': { controller: 'ItemController' }
    *   }
@@ -2450,7 +2450,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    * // ...
    *
    * $state.go('home');
-   * // Auto-populates list and item views with /partials/home/contact/list.html,
+   * // Auto-populates list and item page with /partials/home/contact/list.html,
    * // and /partials/home/contact/item.html, respectively.
    * </pre>
    *
@@ -3451,7 +3451,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       })];
       if (inherited) promises.push(inherited);
 
-      // Resolve template and dependencies for all views.
+      // Resolve template and dependencies for all page.
       forEach(state.views, function (view, name) {
         var injectables = (view.resolve && view.resolve !== state.resolve ? view.resolve : {});
         injectables.$template = [ function () {

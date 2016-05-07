@@ -4764,11 +4764,11 @@ var zyngaCore = { effect: {} };
 
 
 /**
- * ionic.views.Scroll
+ * ionic.page.Scroll
  * A powerful scroll view with support for bouncing, pull to refresh, and paging.
  * @param   {Object}        options options for the scroll view
  * @class A scroll view system
- * @memberof ionic.views
+ * @memberof ionic.page
  */
 ionic.views.Scroll = ionic.views.View.inherit({
   initialize: function(options) {
@@ -5260,7 +5260,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Listen on document because container may not have had the last
     // keyboardActiveElement, for example after closing a modal with a focused
     // input and returning to a previously resized scroll view in an ion-content.
-    // Since we can only resize scroll views that are currently visible, just resize
+    // Since we can only resize scroll page that are currently visible, just resize
     // the current scroll view when the keyboard is closed.
     document.addEventListener('resetScrollView', self.resetScrollView);
 
@@ -7524,7 +7524,7 @@ ionic.scroll = {
       // Listen on document because container may not have had the last
       // keyboardActiveElement, for example after closing a modal with a focused
       // input and returning to a previously resized scroll view in an ion-content.
-      // Since we can only resize scroll views that are currently visible, just resize
+      // Since we can only resize scroll page that are currently visible, just resize
       // the current scroll view when the keyboard is closed.
       document.addEventListener('resetScrollView', self.resetScrollView);
     },
@@ -7924,7 +7924,7 @@ ionic.scroll = {
 
   /**
    * The ListView handles a list of items. It will process drag animations, edit mode,
-   * and other operations that are common on mobile lists or table views.
+   * and other operations that are common on mobile lists or table page.
    */
   ionic.views.ListView = ionic.views.View.inherit({
     initialize: function(opts) {

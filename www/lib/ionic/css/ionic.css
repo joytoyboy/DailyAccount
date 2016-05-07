@@ -5373,7 +5373,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
 /**
  * Popovers
  * --------------------------------------------------
- * Popovers are independent views which float over content
+ * Popovers are independent page which float over content
  */
 .popover-backdrop {
   position: fixed;

@@ -22,3 +22,23 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+.config(function ($stateProvider, $urlRouterProvider) {
+  $stateProvider
+    .state("wizard", {
+      templateUrl: "./page/wizard.html"
+    })
+    .state("home", {
+      templateUrl: "./page/home.html"
+    });
+}).controller("AppCtrl", function ($scope, $state, $ionicNavBarDelegate) {
+  $scope.setNavTitle = function(name){
+    $ionicNavBarDelegate.title("ddd");
+  }
+  $scope.hideNavTitle = function () {
+    $ionicNavBarDelegate.showBar(false);
+  }
+
+  $state.go('wizard');
+  $scope.hideNavTitle();
+})
+
