@@ -28,8 +28,41 @@ angular.module('starter', ['ionic'])
       templateUrl: "./page/wizard.html"
     })
     .state("home", {
-      templateUrl: "./page/home.html"
-    });
+      'url' : '/home',
+      templateUrl: "./page/home.html",
+      abstract: true
+    })
+    .state('home.flow', {
+      // **坑**：这里不能写成`/home/flow`，因为继承关系，会自动转换为`/home/flow`。
+      url: '/flow',
+      views: {
+        'home-flow': {
+          templateUrl: './page/home-flow.html'
+          // controller: 'DashCtrl'
+        }
+      }
+    })
+    .state('home.stat', {
+      url: '/stat',
+      views: {
+        'home-stat': {
+          templateUrl: './page/home-stat.html'
+          // controller: 'DashCtrl'
+        }
+      }
+    })
+    .state('home.mine', {
+      url: '/mine',
+      views: {
+        'home-mine': {
+          templateUrl: './page/home-mine.html'
+          // controller: 'DashCtrl'
+        }
+      }
+    })
+  ;
+  $urlRouterProvider.otherwise('/home/flow');
+
 }).controller("AppCtrl", function ($scope, $state, $ionicNavBarDelegate) {
   $scope.setNavTitle = function(name){
     $ionicNavBarDelegate.title("ddd");
@@ -38,7 +71,56 @@ angular.module('starter', ['ionic'])
     $ionicNavBarDelegate.showBar(false);
   }
 
+  $scope.flowItemTypeMap = {
+    '社交': {style: 'app-tag-green'},
+    '工资': {style: 'app-tag-red'}
+  }
+
+  $scope.flowItems = [
+    { img: 'img/ic_out.png',
+      title: '泡妞',
+      moneyType: '现金',
+      price: '400元',
+      type: '社交',
+    }
+    , { img: 'img/ic_in.png',
+      title: '发工资',
+      moneyType: '银行卡',
+      price: '5000元',
+      type: '工资',
+    }
+    , { img: 'img/ic_in.png',
+      title: '发工资',
+      moneyType: '银行卡',
+      price: '5000元',
+      type: '工资',
+    }
+    , { img: 'img/ic_in.png',
+      title: '发工资',
+      moneyType: '银行卡',
+      price: '5000元',
+      type: '工资',
+    }
+    , { img: 'img/ic_in.png',
+      title: '发工资',
+      moneyType: '银行卡',
+      price: '5000元',
+      type: '工资',
+    }
+  ];
+
+  $scope.share = function (item) {
+
+  };
+
+  $scope.edit = function (item) {
+
+  };
+
+  $scope.reorderItem = function (item, from, to) {
+
+  };
+
   $state.go('wizard');
-  $scope.hideNavTitle();
 })
 
