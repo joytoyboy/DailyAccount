@@ -106,3 +106,22 @@
   width: 50%;
   max-width: 100px;
 }
+
+.app-login-user{
+  width: 96px;
+  height:96px;
+}
+
+/*input.ng-invalid {*/
+  /*border: 1px solid red;*/
+/*}*/
+
+/*input.ng-valid {*/
+  /*border: 1px solid green;*/
+/*}*/
+
+.app-form-error{
+  margin-left: 16px;
+  margin-bottom: 10px;
+  color: red;
+}
