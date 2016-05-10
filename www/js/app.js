@@ -31,7 +31,7 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
     })
     .state("wizard", {
       url: "/wizard.html",
-      templateUrl: "./page/wizard.html"
+      templateUrl: "./page/wizard.html",
       // 这里定义进入此页后是否将前面的页面清掉，清掉后按回退键就不能进入前一页了。
       params: {'clearHistory': false}
     })
