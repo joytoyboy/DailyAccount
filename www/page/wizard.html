@@ -1,7 +1,23 @@
-<ion-view view-title="导航">
-  <ion-content>
-    <a ui-sref="home.stat">
-      <image width="100%" height="100%" src="img/wizard1.jpg" />
-    </a>
-  </ion-content>
+<ion-view  ng-controller="WizardCtrl" hide-nav-bar="true">
+  <ion-slides options="slideOptions" slider="slideData.slider">
+    <ion-slide-page>
+      <div class="box app-wizardimg">
+        <img src="img/wizard/wizard1.png">
+      </div>
+    </ion-slide-page>
+    <ion-slide-page>
+      <div class="box app-wizardimg">
+        <img src="img/wizard/wizard2.png">
+      </div>
+    </ion-slide-page>
+    <ion-slide-page>
+      <div class="box app-wizardimg">
+        <img src="img/wizard/wizard3.png">
+      </div>
+      <div class="app-centerdiv app-bottom30">
+        <!--<a class="button button-positive app-btnGoHome" ui-sref="login">立即进入</a>-->
+        <a class="button button-positive app-btnGoHome" ng-click="nextPage()">立即进入</a>
+      </div>
+    </ion-slide-page>
+  </ion-slides>
 </ion-view>

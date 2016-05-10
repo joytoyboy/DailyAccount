@@ -40,3 +40,69 @@
   vertical-align: middle;
   margin-left: 10px;
 }
+
+.app-centerdiv{
+  margin: auto;
+  text-align: center;
+  width: 100%;
+}
+
+.app-bottom30{
+  position: absolute;
+  bottom: 30px;
+}
+
+/*splash页*/
+.app-splash-logo{
+  width: 100%;
+  height: 70%;
+  background: #ff6000;
+  color: #fff;
+}
+
+.flexbox{
+  /* 新版语法 */
+  width: 100%;
+  height: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-item: center !important;
+  align-item: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.app-splash-logo img{
+  vertical-align: middle;
+  max-width: 100px;
+  max-height: 100px;
+  margin: 150px 150px;
+  display:block;
+}
+
+.app-splash-slogan {
+  background: #fff;
+  color: #ff6000;
+  width: 100%;
+  height: 30%;
+}
+
+.app-splash-slogan img{
+  vertical-align: middle;
+  text-align: center;
+  max-width: 100%;
+  margin-top: 20px;
+}
+
+.app-wizardimg{
+  width: 100%;
+  height: 100%;
+}
+
+.app-wizardimg img{
+  width: 100%;
+  height: 100%;
+}
+.app-btnGoHome{
+  width: 50%;
+  max-width: 100px;
+}

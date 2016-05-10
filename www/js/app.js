@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardCtrl','app.loginCtrl'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -22,15 +22,31 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
+    .state("splash", {
+      url: "/splash.html",
+      templateUrl: "./page/splash.html"
+    })
     .state("wizard", {
+      url: "/wizard.html",
       templateUrl: "./page/wizard.html"
+      // 这里定义进入此页后是否将前面的页面清掉，清掉后按回退键就不能进入前一页了。
+      params: {'clearHistory': false}
+    })
+    .state("login", {
+      url: "/login.html",
+      templateUrl: "./page/login.html",
+      // 这里定义进入此页后是否将前面的页面清掉，清掉后按回退键就不能进入前一页了。
+      params: {'clearHistory': false}
     })
     .state("home", {
       'url' : '/home',
       templateUrl: "./page/home.html",
-      abstract: true
+      abstract: true,
+      // 这里定义进入此页后是否将前面的页面清掉，清掉后按回退键就不能进入前一页了。
+      params: {'clearHistory': false}
     })
     .state('home.flow', {
       // **坑**：这里不能写成`/home/flow`，因为继承关系，会自动转换为`/home/flow`。
@@ -68,7 +84,7 @@ angular.module('starter', ['ionic'])
     $ionicNavBarDelegate.title("ddd");
   }
   $scope.hideNavTitle = function () {
-    $ionicNavBarDelegate.showBar(false);
+    // $ionicNavBarDelegate.showBar(false);
   }
 
   $scope.flowItemTypeMap = {
@@ -121,6 +137,6 @@ angular.module('starter', ['ionic'])
 
   };
 
-  $state.go('wizard');
+  $state.go('splash');
 })
 
