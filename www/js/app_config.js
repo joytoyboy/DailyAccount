@@ -12,13 +12,14 @@ angular.module('app.appConfig', [])
         }
 
         return {
-          firstRun: true
+          firstRun: true,
+          url: "http://mmb.qsc365.com/admin/if/"
         };
       },
       // 保存App配置数据
       saveConfig: function(appConfig) {
         window.localStorage['appConfig'] = angular.toJson(appConfig);
-      },
+      }
     }
   })
 ;

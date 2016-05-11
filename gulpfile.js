@@ -7,6 +7,10 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 
+// 需要`npm install --save replace`
+var replace = require('replace');
+var replaceFiles = ['./www/js/app.js'];
+
 var paths = {
   sass: ['./scss/**/*.scss']
 };
@@ -48,4 +52,24 @@ gulp.task('git-check', function(done) {
     process.exit(1);
   }
   done();
+});
+
+gulp.task('add-proxy', function() {
+  return replace({
+    regex: "http://mmb.qsc365.com/admin/if",
+    replacement: "http://localhost:8100/admin/if",
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  });
+});
+
+gulp.task('remove-proxy', function() {
+  return replace({
+    regex: "http://localhost:8100/admin/if",
+    replacement: "http://mmb.qsc365.com/admin/if",
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  });
 });

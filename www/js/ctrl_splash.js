@@ -2,21 +2,22 @@
  * Created by joytoyboy on 2016/5/10.
  */
 angular.module('app.splashCtrl', [])
-  .controller('SplashCtrl', ["$scope", "AppConfig", "$timeout", "$state", function($scope, AppConfig, $timeout, $state) {
-    $scope.appConfig = AppConfig.getConfig();
+  .controller('SplashCtrl', ["$scope", '$rootScope', "AppConfig", "$timeout", "$state",
+                       function($scope, $rootScope, AppConfig, $timeout, $state) {
+    $rootScope.appConfig = AppConfig.getConfig();
     $scope.getFirstRun = function () {
-      if (null == $scope.appConfig){
+      if (null == $rootScope.appConfig){
         return true;
       }
 
-      return $scope.appConfig.firstRun;
+      return $rootScope.appConfig.firstRun;
     };
 
     $scope.isFirstRun = $scope.getFirstRun();
 
     // 将firstRun改为false，保存到本地。
-    $scope.appConfig.firstRun = false;
-    AppConfig.saveConfig($scope.appConfig);
+    $rootScope.appConfig.firstRun = false;
+    AppConfig.saveConfig($rootScope.appConfig);
 
     // 3秒钟后跳转到wizard页
     $timeout(function(){

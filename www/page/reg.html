@@ -1,0 +1,71 @@
+<ion-view  ng-controller="RegCtrl" view-title="注册">
+  <ion-content>
+    <!--novalidate : 不使用h5自带的验证，使用angularjs验证-->
+    <form role="form" name="regForm" ng-submit="reg(regForm.$valid)" novalidate >
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="输入用户名" name="name" required ng-minlength="2" ng-maxlength="20" ng-model="regData.name">
+        </label>
+        <div class="error app-form-error"
+             ng-show="regForm.name.$dirty && regForm.name.$invalid">
+          <small class="error" ng-show="regForm.name.$error.required">
+            请填写名称
+          </small>
+          <small class="error" ng-show="regForm.name.$error.minlength">
+            名称不能少于2字符
+          </small>
+          <small class="error" ng-show="regForm.name.$error.maxlength">
+            名称不能超过20字符
+          </small>
+        </div>
+
+        <label class="item item-input">
+          <input type="text" placeholder="输入昵称(选填)" name="nickname" ng-maxlength="20" ng-model="regData.nickname">
+        </label>
+        <div class="error app-form-error"
+             ng-show="regForm.nickname.$dirty && regForm.nickname.$invalid">
+          <small class="error" ng-show="regForm.nickname.$error.maxlength">
+            昵称不能超过20字符
+          </small>
+        </div>
+
+        <label class="item item-input">
+          <input type="password" placeholder="输入密码" name="pwd" required ng-minlength="6" ng-maxlength="20" check-pwd ng-model="regData.pwd">
+        </label>
+        <div class="error app-form-error"
+             ng-show="regForm.pwd.$dirty && regForm.pwd.$invalid">
+          <small class="error" ng-show="regForm.pwd.$error.required">
+            请输入密码
+          </small>
+          <small class="error" ng-show="regForm.pwd.$error.minlength">
+            不能少于6字符
+          </small>
+          <small class="error" ng-show="regForm.pwd.$error.maxlength">
+            不能超过20字符
+          </small>
+          <small class="error" ng-show="regForm.pwd.$error.checkPwd">
+            密码只能为字母和数组的组合
+          </small>
+        </div>
+
+        <label class="item item-input">
+          <input type="password" placeholder="再输一遍密码" name="pwd2" required check-pwd-match="pwd" ng-model="regData.pwd2">
+        </label>
+        <div class="error app-form-error"
+             ng-show="regForm.pwd2.$dirty && regForm.pwd2.$invalid">
+          <small class="error" ng-show="regForm.pwd2.$error.required">
+            请输入密码
+          </small>
+          <small class="error" ng-show="regForm.pwd2.$error.checkPwdMatch">
+            两次输入的密码不一致
+          </small>
+        </div>
+      </div>
+      <div class="padding">
+        <!--禁用： ng-disabled="regForm.$invalid"-->
+        <button type="submit" class="button button-block button-positive" >注册</button>
+      </div>
+    </form>
+
+  </ion-content>
+</ion-view>

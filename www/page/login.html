@@ -9,7 +9,7 @@
           </div>
         </label>
         <label class="item item-input">
-          <input type="text" placeholder="输入用户名" name="name" required ng-minlength="2" ng-maxlength="20" ng-model="loginData.userName">
+          <input type="text" placeholder="输入用户名" name="name" required ng-minlength="2" ng-maxlength="20" ng-model="loginData.name">
         </label>
         <div class="error app-form-error"
              ng-show="loginForm.name.$dirty && loginForm.name.$invalid">
@@ -46,6 +46,12 @@
       <div class="padding">
         <!--禁用： ng-disabled="loginForm.$invalid"-->
         <button type="submit" class="button button-block button-positive" >登录</button>
+      </div>
+      <div class="padding">
+        <!--禁用： ng-disabled="loginForm.$invalid"-->
+        <div class="app-right">
+          <button type="button" class="button button-block button-clear" ui-sref="reg">注册</button>
+        </div>
       </div>
     </form>
 

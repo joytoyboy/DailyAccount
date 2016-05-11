@@ -3,7 +3,8 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardCtrl','app.loginCtrl'])
+angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardCtrl','app.loginCtrl'
+  , 'app.regCtrl'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -22,6 +23,35 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
     }
   });
 })
+  
+.constant('AppConst', {
+  URL: 'http://localhost:8100/admin/if/',
+  LOGIN: 'login.html',
+  REG: 'reg.html',
+  CODE_OK: 1,
+  CODE_NOTLOGIN: -1,
+})
+
+// 自定义密码检测指令。
+// 坑: 在js中使用驼峰命名，在html中使用-分隔符，如checkPwd在html的input中使用为：check-pwd
+.directive('checkPwd', [function () {
+  return {
+    require: "ngModel",
+    link: function (scope, element, attr, ngModel) {
+      if (ngModel) {
+        // 只允许字母和数字。
+        var pwdRegex = /^[A-Za-z0-9]+$/i;
+      }
+      var pwdValidator = function (value) {
+        var validity = ngModel.$isEmpty(value) || pwdRegex.test(value);
+        ngModel.$setValidity("checkPwd", validity);
+        return validity ? value : undefined;
+      };
+      ngModel.$formatters.push(pwdValidator);
+      ngModel.$parsers.push(pwdValidator);
+    }
+  };
+}])
 
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -38,6 +68,12 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
     .state("login", {
       url: "/login.html",
       templateUrl: "./page/login.html",
+      // 这里定义进入此页后是否将前面的页面清掉，清掉后按回退键就不能进入前一页了。
+      params: {'clearHistory': false}
+    })
+    .state("reg", {
+      url: "/reg.html",
+      templateUrl: "./page/reg.html",
       // 这里定义进入此页后是否将前面的页面清掉，清掉后按回退键就不能进入前一页了。
       params: {'clearHistory': false}
     })
@@ -79,13 +115,28 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
   ;
   $urlRouterProvider.otherwise('/home/flow');
 
-}).controller("AppCtrl", function ($scope, $state, $ionicNavBarDelegate) {
+}).controller("AppCtrl", ['$scope', '$rootScope', "AppConfig", '$state', '$ionicNavBarDelegate', '$http','$ionicPopup',
+            function ($scope, $rootScope, AppConfig, $state, $ionicNavBarDelegate, $http,$ionicPopup) {
   $scope.setNavTitle = function(name){
-    $ionicNavBarDelegate.title("ddd");
+    // $ionicNavBarDelegate.title("ddd");
   }
   $scope.hideNavTitle = function () {
     // $ionicNavBarDelegate.showBar(false);
   }
+
+
+  // 错误提示框
+  $rootScope.showAlert = function(msg) {
+    var alertPopup = $ionicPopup.alert({
+      title: '错误',
+      template: msg
+    });
+
+    alertPopup.then(function(res) {
+      // do nothing.
+    });
+  };
+
 
   $scope.flowItemTypeMap = {
     '社交': {style: 'app-tag-green'},
@@ -137,6 +188,15 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
 
   };
 
+  // 设置请求头。
+  $rootScope.httpHeaders = {
+    'UUID': '1234',
+    'AppVer': '1',
+    'OSType': '1',
+    'OSVer': '1',
+    'token': 'sss',
+  }
+
   $state.go('splash');
-})
+}])
 
