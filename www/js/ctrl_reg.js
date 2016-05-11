@@ -38,6 +38,10 @@ angular.module('app.regCtrl', [])
               console.log($scope.regData);
               $rootScope.showAlert(response.message);
             }
+            else{
+              $scope.regData.name = $scope.regData.pwd = $scope.regData.pwd2 = $scope.regData.nickname = '';
+              goWithoutBack($state, 'login');
+            }
           })
           .error(function (data) {
             //错误代码

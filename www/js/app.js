@@ -23,7 +23,7 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
     }
   });
 })
-  
+
 .constant('AppConst', {
   URL: 'http://localhost:8100/admin/if/',
   LOGIN: 'login.html',
@@ -53,7 +53,7 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
   };
 }])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider,$httpProvider) {
   $stateProvider
     .state("splash", {
       url: "/splash.html",
@@ -114,7 +114,8 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
     })
   ;
   $urlRouterProvider.otherwise('/home/flow');
-
+  
+  httpTransform($httpProvider);
 }).controller("AppCtrl", ['$scope', '$rootScope', "AppConfig", '$state', '$ionicNavBarDelegate', '$http','$ionicPopup',
             function ($scope, $rootScope, AppConfig, $state, $ionicNavBarDelegate, $http,$ionicPopup) {
   $scope.setNavTitle = function(name){
@@ -195,6 +196,9 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
     'OSType': '1',
     'OSVer': '1',
     'token': 'sss',
+    // 'X-Requested-With': 'XMLHttpRequest',
+    // 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+    // 'Accept': 'application/json, text/javascript, */*; q=0.01',
   }
 
   $state.go('splash');
