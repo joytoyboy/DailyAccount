@@ -1,2 +1,53 @@
-<ion-view  ng-controller="LoginCtrl" hide-nav-bar="true">
+<ion-view  ng-controller="LoginCtrl" view-title="登录">
+  <ion-content>
+    <!--novalidate : 不使用h5自带的验证，使用angularjs验证-->
+    <form role="form" name="loginForm" ng-submit="login(loginForm.$valid)" novalidate >
+      <div class="list">
+        <label class="item">
+          <div class="app-centerdiv">
+            <img class="app-login-user" src="img/login/user.png">
+          </div>
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="输入用户名" name="name" required ng-minlength="2" ng-maxlength="20" ng-model="loginData.userName">
+        </label>
+        <div class="error app-form-error"
+             ng-show="loginForm.name.$dirty && loginForm.name.$invalid">
+          <small class="error" ng-show="loginForm.name.$error.required">
+            请填写名称
+          </small>
+          <small class="error" ng-show="loginForm.name.$error.minlength">
+            名称不能少于2字符
+          </small>
+          <small class="error" ng-show="loginForm.name.$error.maxlength">
+            名称不能超过20字符
+          </small>
+        </div>
+
+        <label class="item item-input">
+          <input type="password" placeholder="输入密码" name="pwd" required ng-minlength="6" ng-maxlength="20" check-pwd ng-model="loginData.pwd">
+        </label>
+        <div class="error app-form-error"
+             ng-show="loginForm.pwd.$dirty && loginForm.pwd.$invalid">
+          <small class="error" ng-show="loginForm.pwd.$error.required">
+            请输入密码
+          </small>
+          <small class="error" ng-show="loginForm.pwd.$error.minlength">
+            不能少于6字符
+          </small>
+          <small class="error" ng-show="loginForm.pwd.$error.maxlength">
+            不能超过20字符
+          </small>
+          <small class="error" ng-show="loginForm.pwd.$error.checkPwd">
+            密码只能为字母和数组的组合
+          </small>
+        </div>
+      </div>
+      <div class="padding">
+        <!--禁用： ng-disabled="loginForm.$invalid"-->
+        <button type="submit" class="button button-block button-positive" >登录</button>
+      </div>
+    </form>
+
+  </ion-content>
 </ion-view>
