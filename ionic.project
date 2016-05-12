@@ -4,8 +4,6 @@
   "proxies": [
     {
       "path": "/admin/if/",
-      "_comment": "等上线后，把此处替换为真正的服务器url"
-      "_proxyUrl": "http://mmb.qsc365.com/admin/if/"
       "proxyUrl": "http://localhost/dailyaccountserver/htdocs/admin/if/"
     }
   ]
