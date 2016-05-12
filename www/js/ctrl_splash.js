@@ -4,7 +4,6 @@
 angular.module('app.splashCtrl', [])
   .controller('SplashCtrl', ["$scope", '$rootScope', "AppConfig", "$timeout", "$state",
                        function($scope, $rootScope, AppConfig, $timeout, $state) {
-    $rootScope.appConfig = AppConfig.getConfig();
     $scope.getFirstRun = function () {
       if (null == $rootScope.appConfig){
         return true;

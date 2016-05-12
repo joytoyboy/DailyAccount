@@ -13,6 +13,8 @@ angular.module('app.appConfig', [])
 
         return {
           firstRun: true,
+          userName: '',
+          token: '',
         };
       },
       // 保存App配置数据

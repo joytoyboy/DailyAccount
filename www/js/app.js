@@ -114,10 +114,13 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
     })
   ;
   $urlRouterProvider.otherwise('/home/flow');
-  
+
   httpTransform($httpProvider);
 }).controller("AppCtrl", ['$scope', '$rootScope', "AppConfig", '$state', '$ionicNavBarDelegate', '$http','$ionicPopup',
-            function ($scope, $rootScope, AppConfig, $state, $ionicNavBarDelegate, $http,$ionicPopup) {
+  function ($scope, $rootScope, AppConfig, $state, $ionicNavBarDelegate, $http,$ionicPopup) {
+    
+  $rootScope.appConfig = AppConfig.getConfig();
+
   $scope.setNavTitle = function(name){
     // $ionicNavBarDelegate.title("ddd");
   }

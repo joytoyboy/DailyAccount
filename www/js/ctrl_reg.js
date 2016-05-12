@@ -11,16 +11,22 @@ angular.module('app.regCtrl', [])
       }
 
       // 表单数据
-      $scope.regData = {
-        name: '', // 用户名
-        pwd: '',   // 密码
-        pwd2: '',   // 第二次输入的密码
-        nickname: '' // 昵称
-      };
+
+      $scope.reset = function (form) {
+        $scope.regData = {
+          name: '', // 用户名
+          pwd: '',   // 密码
+          pwd2: '',   // 第二次输入的密码
+          nickname: '' // 昵称
+        };
+        resetForm(form);
+      }
+
+      $scope.reset(null);
 
       // 注册处理。
-      $scope.reg = function (valid) {
-        if (!valid) {
+      $scope.reg = function (regForm) {
+        if (!regForm.$valid) {
           $rootScope.showAlert('请输入正确的参数。');
           return;
         }
@@ -39,7 +45,7 @@ angular.module('app.regCtrl', [])
               $rootScope.showAlert(response.message);
             }
             else{
-              $scope.regData.name = $scope.regData.pwd = $scope.regData.pwd2 = $scope.regData.nickname = '';
+              $scope.reset(regForm);
               goWithoutBack($state, 'login');
             }
           })
