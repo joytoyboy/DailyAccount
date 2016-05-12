@@ -1,9 +1,6 @@
 <ion-view view-title="流水">
   <ion-content class="padding">
-    <ion-list ng-controller="AppCtrl"
-              show-delete="shouldShowDelete"
-              show-reorder="shouldShowReorder"
-              can-swipe="listCanSwipe">
+    <ion-list >
       <ion-item ng-repeat="item in flowItems"
                 class="item-avatar-left">
         <img ng-src="{{item.img}}" class="app-clear-radius">

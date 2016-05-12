@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardCtrl','app.loginCtrl'
-  , 'app.regCtrl'])
+  , 'app.regCtrl', 'app.homeCtrl', 'app.homeFlowCtrl','app.homeStatCtrl','app.homeMineCtrl','app.flow'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -89,8 +89,8 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
       url: '/flow',
       views: {
         'home-flow': {
-          templateUrl: './page/home-flow.html'
-          // controller: 'DashCtrl'
+          templateUrl: './page/home-flow.html',
+          controller: 'HomeFlowCtrl'
         }
       }
     })
@@ -98,8 +98,8 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
       url: '/stat',
       views: {
         'home-stat': {
-          templateUrl: './page/home-stat.html'
-          // controller: 'DashCtrl'
+          templateUrl: './page/home-stat.html',
+          controller: 'HomeStatCtrl'
         }
       }
     })
@@ -107,8 +107,8 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
       url: '/mine',
       views: {
         'home-mine': {
-          templateUrl: './page/home-mine.html'
-          // controller: 'DashCtrl'
+          templateUrl: './page/home-mine.html',
+          controller: 'HomeMineCtrl'
         }
       }
     })
@@ -118,7 +118,7 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
   httpTransform($httpProvider);
 }).controller("AppCtrl", ['$scope', '$rootScope', "AppConfig", '$state', '$ionicNavBarDelegate', '$http','$ionicPopup',
   function ($scope, $rootScope, AppConfig, $state, $ionicNavBarDelegate, $http,$ionicPopup) {
-    
+
   $rootScope.appConfig = AppConfig.getConfig();
 
   $scope.setNavTitle = function(name){
@@ -141,56 +141,56 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
     });
   };
 
+  //
+  // $scope.flowItemTypeMap = {
+  //   '社交': {style: 'app-tag-green'},
+  //   '工资': {style: 'app-tag-red'}
+  // }
 
-  $scope.flowItemTypeMap = {
-    '社交': {style: 'app-tag-green'},
-    '工资': {style: 'app-tag-red'}
-  }
+  // $scope.flowItems = [
+  //   { img: 'img/ic_out.png',
+  //     title: '泡妞',
+  //     moneyType: '现金',
+  //     price: '400元',
+  //     type: '社交',
+  //   }
+  //   , { img: 'img/ic_in.png',
+  //     title: '发工资',
+  //     moneyType: '银行卡',
+  //     price: '5000元',
+  //     type: '工资',
+  //   }
+  //   , { img: 'img/ic_in.png',
+  //     title: '发工资',
+  //     moneyType: '银行卡',
+  //     price: '5000元',
+  //     type: '工资',
+  //   }
+  //   , { img: 'img/ic_in.png',
+  //     title: '发工资',
+  //     moneyType: '银行卡',
+  //     price: '5000元',
+  //     type: '工资',
+  //   }
+  //   , { img: 'img/ic_in.png',
+  //     title: '发工资',
+  //     moneyType: '银行卡',
+  //     price: '5000元',
+  //     type: '工资',
+  //   }
+  // ];
 
-  $scope.flowItems = [
-    { img: 'img/ic_out.png',
-      title: '泡妞',
-      moneyType: '现金',
-      price: '400元',
-      type: '社交',
-    }
-    , { img: 'img/ic_in.png',
-      title: '发工资',
-      moneyType: '银行卡',
-      price: '5000元',
-      type: '工资',
-    }
-    , { img: 'img/ic_in.png',
-      title: '发工资',
-      moneyType: '银行卡',
-      price: '5000元',
-      type: '工资',
-    }
-    , { img: 'img/ic_in.png',
-      title: '发工资',
-      moneyType: '银行卡',
-      price: '5000元',
-      type: '工资',
-    }
-    , { img: 'img/ic_in.png',
-      title: '发工资',
-      moneyType: '银行卡',
-      price: '5000元',
-      type: '工资',
-    }
-  ];
-
-  $scope.share = function (item) {
-
-  };
-
-  $scope.edit = function (item) {
-
-  };
-
-  $scope.reorderItem = function (item, from, to) {
-
-  };
+  // $scope.share = function (item) {
+  //
+  // };
+  //
+  // $scope.edit = function (item) {
+  //
+  // };
+  //
+  // $scope.reorderItem = function (item, from, to) {
+  //
+  // };
 
   // 设置请求头。
   $rootScope.httpHeaders = {
