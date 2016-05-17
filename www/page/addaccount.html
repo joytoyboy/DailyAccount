@@ -1,0 +1,69 @@
+<ion-view view-title="添加账目">
+  <ion-content>
+    <form role="form" name="addForm" ng-submit="addAccount(addForm)" novalidate >
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">日期</span>
+          <input type="date" placeholder="输入日期" name="time" required ng-model="accountData.time">
+        </label>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            账目类型
+          </div>
+          <select class="form-control" name="type" ng-model="accountData.type" ng-options="x.name for x in accountType track by x.id"  ng-change="typeChanged()">
+          </select>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">描述</span>
+          <input type="text" placeholder="输入描述" name="desc" required ng-model="accountData.desc">
+        </label>
+        <div class="error app-form-error"
+             ng-show="addForm.desc.$dirty && addForm.desc.$invalid">
+          <small class="error" ng-show="addForm.desc.$error.required">
+            请输入描述
+          </small>
+        </div>
+
+        <div class="item item-input">
+          <label class="item-input-wrapper item-select app-item-input-wrapper">
+            <span class="input-label">分类</span>
+            <select name="use" ng-model="accountData.use" ng-options="x.name for x in typeUseList track by x.id">
+            </select>
+          </label>
+          <button type="button" class="button button-outline button-small" ng-click="addUse()">添加</button>
+        </div>
+
+        <label class="item item-input">
+          <span class="input-label">金额</span>
+          <input type="number" placeholder="输入金额" name="amount" required check-money ng-model="accountData.amount">
+        </label>
+        <div class="error app-form-error"
+             ng-show="addForm.amount.$dirty && addForm.amount.$invalid">
+          <small class="error" ng-show="addForm.amount.$error.required">
+            金额不能为空。
+          </small>
+          <small class="error" ng-show="addForm.amount.$error.checkMoney">
+            {{moneyPrompt}}
+          </small>
+        </div>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            支付方式
+          </div>
+          <select class="form-control" name="moneyMode" ng-model="accountData.moneyMode" ng-options="x.name for x in moneyMode track by x.id">
+          </select>
+        </label>
+      </div>
+
+      <div class="padding">
+        <!--禁用： ng-disabled="addForm.$invalid"-->
+        <button type="submit" class="button button-block button-positive" >添加</button>
+        <button type="button" class="button button-block button-outline" ng-click="back()">返回</button>
+      </div>
+    </form>
+
+  </ion-content>
+</ion-view>

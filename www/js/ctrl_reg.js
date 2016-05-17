@@ -27,22 +27,22 @@ angular.module('app.regCtrl', [])
       // 注册处理。
       $scope.reg = function (regForm) {
         if (!regForm.$valid) {
-          $rootScope.showAlert('请输入正确的参数。');
+          $rootScope.alertError('请输入正确的参数。');
           return;
         }
         if ($scope.regData.pwd !== $scope.regData.pwd2){
-          $rootScope.showAlert('两次输入的密码不一致。');
+          $rootScope.alertError('两次输入的密码不一致。');
           return;
         }
 
-        $scope.config = {headers: $rootScope.httpHeaders};
+        $scope.config = {headers: $rootScope.httpHeaders()};
         $scope.url = AppConst.URL + AppConst.REG;
         console.log($scope.regData);
         $http.post($scope.url, $scope.regData, $scope.config)
           .success(function (response) {
             if (response.code != AppConst.CODE_OK){
               console.log($scope.regData);
-              $rootScope.showAlert(response.message);
+              $rootScope.alertError(response.message);
             }
             else{
               $scope.reset(regForm);
@@ -51,7 +51,7 @@ angular.module('app.regCtrl', [])
           })
           .error(function (data) {
             //错误代码
-            $rootScope.showAlert(data);
+            $rootScope.alertError(data);
           });
       }
     }
@@ -60,17 +60,7 @@ angular.module('app.regCtrl', [])
     return {
       restrict: 'A',
       require: "ngModel",
-      link: function (scope, element, attr, ngModel) {
-        var pwdValidator = function (value) {
-          var otherInput = element.inheritedData("$formController")[attr.checkPwdMatch];
-          var validity = !ngModel.$isEmpty(value) && value == otherInput.$viewValue;
-          console.log(otherInput.$viewValue + value + validity);
-          ngModel.$setValidity("checkPwdMatch", validity);
-          return validity ? value : undefined;
-        };
-        ngModel.$formatters.push(pwdValidator);
-        ngModel.$parsers.push(pwdValidator);
-      }
+      link: verifyPasswordMatch
     };
   }])
 

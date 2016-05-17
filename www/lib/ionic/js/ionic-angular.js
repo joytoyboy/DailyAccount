@@ -3385,7 +3385,7 @@ var POPUP_TPL =
  *  };
  *
  *  // An alert dialog
- *  $scope.showAlert = function() {
+ *  $scope.alertError = function() {
  *    var alertPopup = $ionicPopup.alert({
  *      title: 'Don\'t eat that!',
  *      template: 'It might taste good'
@@ -3489,7 +3489,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      * function `close`, which can be called with any value to programmatically close the popup
      * with the given value.
      */
-    alert: showAlert,
+    alert: alertError,
 
     /**
      * @ngdoc method
@@ -3733,7 +3733,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     }
   }
 
-  function showAlert(opts) {
+  function alertError(opts) {
     return showPopup(extend({
       buttons: [{
         text: opts.okText || 'OK',

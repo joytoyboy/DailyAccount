@@ -27,16 +27,16 @@ angular.module('app.loginCtrl', [])
       $scope.login = function (loginForm) {
         console.log($scope.loginData);
         if (!loginForm.$valid) {
-          $rootScope.showAlert('请输入正确的参数。');
+          $rootScope.alertError('请输入正确的参数。');
           return;
         }
 
-        $scope.config = {headers: $rootScope.httpHeaders};
+        $scope.config = {headers: $rootScope.httpHeaders()};
         $scope.url = AppConst.URL + AppConst.LOGIN;
         $http.post($scope.url, $scope.loginData, $scope.config)
           .success(function (response) {
             if (response.code != AppConst.CODE_OK){
-              $rootScope.showAlert(response.message);
+              $rootScope.alertError(response.message);
             }
             else{
               // 将用户名保存起来，下次登录显示。
@@ -55,7 +55,7 @@ angular.module('app.loginCtrl', [])
           })
           .error(function (data) {
             //错误代码
-            $rootScope.showAlert(data);
+            $rootScope.alertError(data);
           });
       }
     }

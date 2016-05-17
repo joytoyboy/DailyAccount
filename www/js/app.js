@@ -4,7 +4,9 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardCtrl','app.loginCtrl'
-  , 'app.regCtrl', 'app.homeCtrl', 'app.homeFlowCtrl','app.homeStatCtrl','app.homeMineCtrl','app.flow'])
+  , 'app.regCtrl', 'app.homeCtrl', 'app.homeFlowCtrl','app.homeStatCtrl','app.homeMineCtrl','app.addAccountCtrl'
+  , 'app.addUseCtrl'
+  ,'app.flow'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -28,6 +30,9 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
   URL: 'http://localhost:8100/admin/if/',
   LOGIN: 'login.html',
   REG: 'reg.html',
+  ADD_ACCOUNT: 'addaccount.html',
+  USELIST: 'uselist.html',
+  ADD_USE: 'adduse.html',
   CODE_OK: 1,
   CODE_NOTLOGIN: -1,
 })
@@ -37,19 +42,15 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
 .directive('checkPwd', [function () {
   return {
     require: "ngModel",
-    link: function (scope, element, attr, ngModel) {
-      if (ngModel) {
-        // 只允许字母和数字。
-        var pwdRegex = /^[A-Za-z0-9]+$/i;
-      }
-      var pwdValidator = function (value) {
-        var validity = ngModel.$isEmpty(value) || pwdRegex.test(value);
-        ngModel.$setValidity("checkPwd", validity);
-        return validity ? value : undefined;
-      };
-      ngModel.$formatters.push(pwdValidator);
-      ngModel.$parsers.push(pwdValidator);
-    }
+    link: verifyPassword
+  };
+}])
+
+// 自定义金额检测指令。
+.directive('checkMoney', [function () {
+  return {
+    require: "ngModel",
+    link: verifyMoney
   };
 }])
 
@@ -112,14 +113,28 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
         }
       }
     })
+    .state('addAccount', {
+      url: '/addAccount.html',
+      templateUrl: './page/addaccount.html',
+      controller: 'AddAccountCtrl'
+    })
+    .state('addUse', {
+      url: '/addUse.html',
+      templateUrl: './page/adduse.html',
+      controller: 'AddUseCtrl',
+      params: {'accountType': null}
+    })
   ;
-  $urlRouterProvider.otherwise('/home/flow');
+  $urlRouterProvider.otherwise('splash');
 
   httpTransform($httpProvider);
 }).controller("AppCtrl", ['$scope', '$rootScope', "AppConfig", '$state', '$ionicNavBarDelegate', '$http','$ionicPopup',
-  function ($scope, $rootScope, AppConfig, $state, $ionicNavBarDelegate, $http,$ionicPopup) {
+  'AppConst',
+  function ($scope, $rootScope, AppConfig, $state, $ionicNavBarDelegate, $http,$ionicPopup, AppConst) {
 
   $rootScope.appConfig = AppConfig.getConfig();
+  $rootScope.accountType = AppConfig.getAccountType();
+  $rootScope.moneyMode = AppConfig.getMoneyMode();
 
   $scope.setNavTitle = function(name){
     // $ionicNavBarDelegate.title("ddd");
@@ -128,11 +143,42 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
     // $ionicNavBarDelegate.showBar(false);
   }
 
+  // 向服务器请求分类表。
+  $rootScope.requestAccountUse = function (isSilent) {
+    if (null == $rootScope.appConfig.token){
+      return;
+    }
+
+    $scope.config = {headers: $rootScope.httpHeaders()};
+    $scope.url = AppConst.URL + AppConst.USELIST;
+    $http.post($scope.url, {aa: 0}, $scope.config)
+      .success(function (response) {
+        if (response.code != AppConst.CODE_OK){
+          if (!isSilent){
+            $rootScope.alertError(response.message);
+          }
+        }
+        else{
+          // 保存起来
+          if (response.data.list){
+            $rootScope.appConfig.accountUseList = response.data.list;
+            AppConfig.saveConfig($rootScope.appConfig);
+          }
+        }
+      })
+      .error(function (data) {
+        //错误代码
+        if (!isSilent){
+          $rootScope.alertError(data);
+        }
+      });
+  }
+
 
   // 错误提示框
-  $rootScope.showAlert = function(msg) {
+  $rootScope.alertError = function(msg, title) {
     var alertPopup = $ionicPopup.alert({
-      title: '错误',
+      title: title==null ? '错误' : title,
       template: msg
     });
 
@@ -141,69 +187,29 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
     });
   };
 
-  //
-  // $scope.flowItemTypeMap = {
-  //   '社交': {style: 'app-tag-green'},
-  //   '工资': {style: 'app-tag-red'}
-  // }
-
-  // $scope.flowItems = [
-  //   { img: 'img/ic_out.png',
-  //     title: '泡妞',
-  //     moneyType: '现金',
-  //     price: '400元',
-  //     type: '社交',
-  //   }
-  //   , { img: 'img/ic_in.png',
-  //     title: '发工资',
-  //     moneyType: '银行卡',
-  //     price: '5000元',
-  //     type: '工资',
-  //   }
-  //   , { img: 'img/ic_in.png',
-  //     title: '发工资',
-  //     moneyType: '银行卡',
-  //     price: '5000元',
-  //     type: '工资',
-  //   }
-  //   , { img: 'img/ic_in.png',
-  //     title: '发工资',
-  //     moneyType: '银行卡',
-  //     price: '5000元',
-  //     type: '工资',
-  //   }
-  //   , { img: 'img/ic_in.png',
-  //     title: '发工资',
-  //     moneyType: '银行卡',
-  //     price: '5000元',
-  //     type: '工资',
-  //   }
-  // ];
-
-  // $scope.share = function (item) {
-  //
-  // };
-  //
-  // $scope.edit = function (item) {
-  //
-  // };
-  //
-  // $scope.reorderItem = function (item, from, to) {
-  //
-  // };
+  // 成功提示框
+  $rootScope.alertOK = function(msg) {
+    var alertPopup = $ionicPopup.alert({
+      title: '成功',
+      template: msg
+    });
+  };
 
   // 设置请求头。
-  $rootScope.httpHeaders = {
-    'UUID': '1234',
-    'AppVer': '1',
-    'OSType': '1',
-    'OSVer': '1',
-    'token': 'sss',
-    // 'X-Requested-With': 'XMLHttpRequest',
-    // 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-    // 'Accept': 'application/json, text/javascript, */*; q=0.01',
-  }
+  $rootScope.httpHeaders = function () {
+    return {
+      'UUID': '1234',
+      'AppVer': '1',
+      'OSType': '1',
+      'OSVer': '1',
+      'token': $rootScope.appConfig.token,
+      // 'X-Requested-With': 'XMLHttpRequest',
+      // 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+      // 'Accept': 'application/json, text/javascript, */*; q=0.01',
+    };
+  };
 
+  $rootScope.requestAccountUse(true);
   $state.go('splash');
 }])
 

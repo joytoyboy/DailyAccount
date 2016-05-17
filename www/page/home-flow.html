@@ -1,4 +1,9 @@
 <ion-view view-title="流水">
+  <ion-nav-buttons side="right">
+    <button class="button button-positive right"  ng-click="addAccount()">
+      添加
+    </button>
+  </ion-nav-buttons>
   <ion-content class="padding">
     <ion-list >
       <ion-item ng-repeat="item in flowItems"

@@ -4,7 +4,7 @@
   "proxies": [
     {
       "path": "/admin/if/",
-      "proxyUrl": "http://localhost/dailyaccountserver/htdocs/admin/if/"
+      "proxyUrl": "http://localhost/dailyaccount/admin/if/"
     }
   ]
 }

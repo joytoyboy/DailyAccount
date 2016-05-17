@@ -19,8 +19,11 @@
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
+    <script src="js/util_string.js"></script>
     <script src="js/util_http.js"></script>
     <script src="js/util_common.js"></script>
+    <script src="js/util_time.js"></script>
+    <script src="js/util_verify.js"></script>
     <script src="js/app.js"></script>
     <script src="js/app_config.js"></script>
     <script src="js/ctrl_splash.js"></script>
@@ -31,6 +34,8 @@
     <script src="js/ctrl_home_flow.js"></script>
     <script src="js/ctrl_home_stat.js"></script>
     <script src="js/ctrl_home_mine.js"></script>
+    <script src="js/ctrl_addaccount.js"></script>
+    <script src="js/ctrl_adduse.js"></script>
     <script src="js/fact_flow.js"></script>
   </head>
   <body ng-app="starter" ng-controller="AppCtrl">
@@ -43,6 +48,8 @@
       <!--</ion-content>-->
     <!--</ion-pane>-->
     <ion-nav-bar class="bar-positive" no-tap-scroll="true">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
     </ion-nav-bar>
     <ion-nav-view>
     </ion-nav-view>

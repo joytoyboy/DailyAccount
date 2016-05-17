@@ -1,0 +1,31 @@
+<ion-view view-title="添加账目">
+  <ion-content>
+    <form role="form" name="addForm" ng-submit="addUse(addForm)" novalidate >
+      <div class="list">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            账目类型
+          </div>
+          <select class="form-control" name="type" ng-model="useData.type" ng-options="x.name for x in accountType track by x.id">
+          </select>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">名称</span>
+          <input type="text" placeholder="输入名称" name="name" required ng-model="useData.name">
+        </label>
+        <div class="error app-form-error"
+             ng-show="addForm.name.$dirty && addForm.name.$invalid">
+          <small class="error" ng-show="addForm.name.$error.required">
+            请输入名称
+          </small>
+        </div>
+
+      <div class="padding">
+        <!--禁用： ng-disabled="addForm.$invalid"-->
+        <button type="submit" class="button button-block button-positive" >添加</button>
+      </div>
+    </form>
+
+  </ion-content>
+</ion-view>

@@ -57,7 +57,7 @@ gulp.task('git-check', function(done) {
 gulp.task('add-proxy', function() {
   return replace({
     // regex: "http://mmb.qsc365.com/admin/if",
-    regex: "http://localhost/dailyaccountserver/htdocs/admin/if/",
+    regex: "http://localhost/dailyaccount/admin/if/",
     replacement: "http://localhost:8100/admin/if",
     paths: replaceFiles,
     recursive: false,
@@ -69,7 +69,7 @@ gulp.task('remove-proxy', function() {
   return replace({
     regex: "http://localhost:8100/admin/if",
     // replacement: "http://mmb.qsc365.com/admin/if",
-    replacement: "http://localhost/dailyaccountserver/htdocs/admin/if/",
+    replacement: "http://localhost/dailyaccount/admin/if/",
     paths: replaceFiles,
     recursive: false,
     silent: false,

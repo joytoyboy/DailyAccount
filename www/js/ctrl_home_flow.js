@@ -10,5 +10,9 @@ angular.module('app.homeFlowCtrl', [])
        '社交': {style: 'app-tag-green'},
        '工资': {style: 'app-tag-red'}
      }
+
+     $scope.addAccount = function () {
+       $state.go('addAccount');
+     }
    }])
 ;
