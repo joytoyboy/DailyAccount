@@ -129,8 +129,8 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
 
   httpTransform($httpProvider);
 }).controller("AppCtrl", ['$scope', '$rootScope', "AppConfig", '$state', '$ionicNavBarDelegate', '$http','$ionicPopup',
-  'AppConst',
-  function ($scope, $rootScope, AppConfig, $state, $ionicNavBarDelegate, $http,$ionicPopup, AppConst) {
+  '$cordovaToast', 'AppConst',
+  function ($scope, $rootScope, AppConfig, $state, $ionicNavBarDelegate, $http,$ionicPopup, $cordovaToast, AppConst) {
 
   $rootScope.appConfig = AppConfig.getConfig();
   $rootScope.accountType = AppConfig.getAccountType();
@@ -174,7 +174,6 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
       });
   }
 
-
   // 错误提示框
   $rootScope.alertError = function(msg, title) {
     var alertPopup = $ionicPopup.alert({
@@ -194,6 +193,22 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
       template: msg
     });
   };
+
+  $rootScope.popupConfirm = function (title, message, cb) {
+    var confirmPopup = $ionicPopup.confirm({
+      title: title
+      , template: message
+      , cancelText: '取消'
+      , okText: '确定'
+    });
+
+    return confirmPopup.then(cb);
+  }
+
+  $rootScope.toast = function (message) {
+    $cordovaToast
+      .show(message, 'long', 'center');
+  }
 
   // 设置请求头。
   $rootScope.httpHeaders = function () {
