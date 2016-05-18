@@ -27,7 +27,7 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
 })
 
 .constant('AppConst', {
-  URL: 'http://localhost:8100/admin/if/',
+  URL: 'http://mmb.qsc365.com/admin/if/',
   LOGIN: 'login.html',
   REG: 'reg.html',
   ADD_ACCOUNT: 'addaccount.html',
@@ -129,8 +129,8 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
 
   httpTransform($httpProvider);
 }).controller("AppCtrl", ['$scope', '$rootScope', "AppConfig", '$state', '$ionicNavBarDelegate', '$http','$ionicPopup',
-  '$cordovaToast', 'AppConst',
-  function ($scope, $rootScope, AppConfig, $state, $ionicNavBarDelegate, $http,$ionicPopup, $cordovaToast, AppConst) {
+  'AppConst',
+  function ($scope, $rootScope, AppConfig, $state, $ionicNavBarDelegate, $http,$ionicPopup, AppConst) {
 
   $rootScope.appConfig = AppConfig.getConfig();
   $rootScope.accountType = AppConfig.getAccountType();
@@ -206,8 +206,8 @@ angular.module('starter', ['ionic','app.appConfig','app.splashCtrl','app.wizardC
   }
 
   $rootScope.toast = function (message) {
-    $cordovaToast
-      .show(message, 'long', 'center');
+    // $cordovaToast
+    //   .show(message, 'long', 'center');
   }
 
   // 设置请求头。
